@@ -1,38 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AuraLens – Mood Aura Visualizer</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AuraLens — Mood Aura Visualizer</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <canvas id="particles"></canvas>
+  <!-- Toggle Controls -->
+  <div class="topbar">
+    <div class="brand">AuraLens</div>
 
-    <div class="container">
-        <h1 class="title">AuraLens</h1>
-        <p class="subtitle">Visualize Your Emotional Energy</p>
+    <div class="toggles">
+      <label class="switch">
+        <input id="darkToggle" type="checkbox" />
+        <span class="slider"></span>
+      </label>
+      <span class="toggle-label">Dark</span>
 
-        <select id="moodSelect" class="mood-select">
-            <option value="">Select your mood</option>
-            <option value="happy">Happy</option>
-            <option value="calm">Calm</option>
-            <option value="sad">Sad</option>
-            <option value="anxious">Anxious</option>
-            <option value="excited">Excited</option>
-            <option value="tired">Tired</option>
-        </select>
-
-        <button onclick="generateAura()" class="btn">Show Aura</button>
-
-        <div class="aura-circle" id="auraCircle"></div>
-        <p class="quote" id="quoteText"></p>
+      <label class="switch audio-switch" title="Toggle ambient tone">
+        <input id="audioToggle" type="checkbox" />
+        <span class="slider"></span>
+      </label>
+      <span class="toggle-label">Sound</span>
     </div>
+  </div>
+
+  <!-- Particle canvas behind everything -->
+  <canvas id="particles"></canvas>
+
+  <!-- Main centered card -->
+  <main class="card" id="card">
+    <header class="card-head">
+      <h1 class="title">AuraLens Pro</h1>
+      <p class="subtitle">Visualize your emotional energy</p>
+    </header>
+
+    <section class="controls">
+      <select id="moodSelect" class="mood-select" aria-label="Select mood">
+        <option value="">Select your mood</option>
+
+        <!-- 20+ moods -->
+        <option value="happy">Happy</option>
+        <option value="calm">Calm</option>
+        <option value="sad">Sad</option>
+        <option value="anxious">Anxious</option>
+        <option value="excited">Excited</option>
+        <option value="tired">Tired</option>
+        <option value="grateful">Grateful</option>
+        <option value="motivated">Motivated</option>
+        <option value="nostalgic">Nostalgic</option>
+        <option value="peaceful">Peaceful</option>
+        <option value="lonely">Lonely</option>
+        <option value="dreamy">Dreamy</option>
+        <option value="bored">Bored</option>
+        <option value="optimistic">Optimistic</option>
+        <option value="angry">Angry</option>
+        <option value="loving">Loving</option>
+        <option value="confident">Confident</option>
+        <option value="curious">Curious</option>
+        <option value="playful">Playful</option>
+        <option value="relaxed">Relaxed</option>
+      </select>
+
+      <div class="buttons">
+        <button id="showAuraBtn" class="btn primary">Show Aura</button>
+        <button id="saveMoodBtn" class="btn ghost" title="Save today's mood locally">Save</button>
+      </div>
+    </section>
+
+    <section class="visual">
+      <div class="aura-wrap">
+        <div class="aura-circle" id="auraCircle" aria-hidden="true"></div>
+        <div class="glow-ring" id="glowRing" aria-hidden="true"></div>
+      </div>
+
+      <p class="quote" id="quoteText" aria-live="polite"></p>
+      <div class="history" id="history"></div>
+    </section>
+
+    <footer class="credit">
+      <small>Created by Vashika Tyagi — AuraLens Pro</small>
+    </footer>
+  </main>
 
 <script src="particles.js"></script>
 <script src="script.js"></script>
-
 </body>
 </html>
-

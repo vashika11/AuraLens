@@ -1,23 +1,20 @@
-# 🌈 AuraLens – Aura Visualizer
+# AuraLens — Full Frontend (Mobile optimized & Dark mode)
 
-AuraLens is an aesthetic web app that visualizes your mood through beautiful animated aura gradients.
+AuraLens is an aesthetic mood-to-aura visualizer built with pure HTML/CSS/JS.
+This enhanced version includes responsive layout for mobile, dark mode, many moods,
+ambient tones via WebAudio, glowing orbit particles and background particles,
+and localStorage-based mood history.
 
-## ✨ Features
-- Select a mood
-- Generates a glowing aura animation
-- Inspirational quotes
-- Aesthetic pastel UI
-- Fully responsive
-- No backend needed (HTML/CSS/JS only)
-- Deployable on GitHub Pages
+## Features
+- 20+ moods with unique aura gradients & quotes
+- Mobile-first, responsive layout
+- Dark mode toggle
+- Ambient tone generator (WebAudio) with on/off toggle
+- Glowing orbit particles + soft background particles (canvas)
+- Save recent moods locally (history)
+- No backend. Deploy on GitHub Pages.
 
-## 🚀 Live Demo
-https://vashika11.github.io/AuraLens/
-
-## 🛠 Tech Stack
-- HTML
-- CSS (Pastel UI + animations)
-- JavaScript (Aura Generator)
-
+## Author
+Vashika Tyagi — AuraLens
 
 
