@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraLens – Mood Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="title">AuraLens</h1>
+        <p class="subtitle">Visualize Your Inner Aura</p>
+
+        <select id="moodSelect" class="mood-select">
+            <option value="">How are you feeling today?</option>
+            <option value="happy">Happy</option>
+            <option value="calm">Calm</option>
+            <option value="sad">Sad</option>
+            <option value="anxious">Anxious</option>
+            <option value="excited">Excited</option>
+            <option value="tired">Tired</option>
+        </select>
+
+        <button onclick="generateAura()" class="btn">Generate Aura</button>
+
+        <div class="aura-circle" id="auraCircle"></div>
+
+        <p class="quote" id="quoteText"></p>
+
+    </div>
+
+<script src="script.js"></script>
+</body>
+</html>
