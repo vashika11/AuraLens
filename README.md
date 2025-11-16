@@ -1,4 +1,4 @@
-# 🌈 AuraLens 
+# 🌈 AuraLens – Aura Visualizer
 
 AuraLens is an aesthetic web app that visualizes your mood through beautiful animated aura gradients.
 
