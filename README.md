@@ -12,7 +12,7 @@ AuraLens is an aesthetic web app that visualizes your mood through beautiful ani
 - Deployable on GitHub Pages
 
 ## 🚀 Live Demo
-(After deployment, your link goes here)
+https://vashika11.github.io/AuraLens/
 
 ## 🛠 Tech Stack
 - HTML
