@@ -1,6 +1,5 @@
 # AuraLens 
 
-C:\Users\HP\OneDrive\Desktop\AuraLens.png
 
 AuraLens is an aesthetic mood-to-aura visualizer built with pure HTML/CSS/JS.
 This enhanced version includes responsive layout for mobile, dark mode, many moods,
