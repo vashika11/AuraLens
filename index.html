@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>AuraLens</title>
 
 <link rel="stylesheet" href="style.css">
@@ -63,6 +64,11 @@
 <option>Curious</option>
 <option>Playful</option>
 <option>Relaxed</option>
+<option>Grateful</option>
+<option>Optimistic</option>
+<option>Nostalgic</option>
+<option>Peaceful</option>
+<option>Bored</option>
 
 </select>
 
@@ -71,9 +77,8 @@ placeholder="Optional: describe more about your mood or your day..."></textarea>
 
 <div class="buttons">
 
-<button class="primary" onclick="showAura()">Show Aura</button>
-
-<button class="secondary" onclick="saveMood()">Save</button>
+<button onclick="showAura()">Show Aura</button>
+<button onclick="saveMood()">Save</button>
 
 </div>
 
@@ -84,18 +89,16 @@ placeholder="Optional: describe more about your mood or your day..."></textarea>
 
 </div>
 
-<div id="quote" class="quote"></div>
+<div id="quote"></div>
 
-<div id="badge" class="badge">No mood yet</div>
-
-<footer class="footer">
+<footer>
 Created by Vashika Tyagi — AuraLens
 </footer>
 
 </div>
 
-<script src="particles.js" defer></script>
-<script src="script.js" defer></script>
+<script src="particles.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
