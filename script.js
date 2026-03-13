@@ -1,5 +1,3 @@
-document.addEventListener("DOMContentLoaded",()=>{
-
 const moodData={
 
 Happy:{color:"#ffd200",freq:520,quote:"Joy is the sunlight of the soul."},
@@ -25,98 +23,97 @@ Bored:{color:"#636e72",freq:170,quote:"Sometimes boredom invites creativity."}
 
 }
 
-let audioCtx
-let oscillator
+let audioCtx=null
+let oscillator=null
+let gainNode=null
 let soundEnabled=true
 
-const aura=document.getElementById("aura")
-const glow=document.getElementById("glow")
-const quote=document.getElementById("quote")
-const moodSelect=document.getElementById("mood")
-
-function detectMood(text){
-
-text=text.toLowerCase()
-
-if(text.includes("stress")) return "Anxious"
-if(text.includes("happy")) return "Happy"
-if(text.includes("sad")) return "Sad"
-if(text.includes("calm")) return "Calm"
-
-return null
-}
-
-window.showAura=function(){
-
-let mood=moodSelect.value
-
-const note=document.getElementById("note").value
-const detected=detectMood(note)
-
-if(detected){
-mood=detected
-moodSelect.value=mood
-}
-
-const data=moodData[mood]
-
-if(!data) return
-
-aura.style.background=data.color
-glow.style.background=data.color
-quote.innerText=data.quote
-
-document.getElementById("edgeGlow").classList.add("edge-active")
-
-playSound(data.freq)
-
-updateNebula(data.color)
-
-}
-
-window.saveMood=function(){
-
-if(oscillator){
-oscillator.stop()
-oscillator=null
-}
-
-document.getElementById("edgeGlow").classList.remove("edge-active")
-
-}
-
-function playSound(freq){
+function startAudio(freq){
 
 if(!soundEnabled) return
 
 if(!audioCtx)
 audioCtx=new(window.AudioContext||window.webkitAudioContext)()
 
-if(oscillator){
-oscillator.stop()
-}
+stopAudio()
 
 oscillator=audioCtx.createOscillator()
-
-const gain=audioCtx.createGain()
+gainNode=audioCtx.createGain()
 
 oscillator.frequency.value=freq
-gain.gain.value=0.04
+oscillator.type="sine"
 
-oscillator.connect(gain)
-gain.connect(audioCtx.destination)
+gainNode.gain.value=0.04
+
+oscillator.connect(gainNode)
+gainNode.connect(audioCtx.destination)
 
 oscillator.start()
 
 }
 
-document.getElementById("soundToggle").addEventListener("change",(e)=>{
+function stopAudio(){
+
+if(oscillator){
+oscillator.stop()
+oscillator.disconnect()
+oscillator=null
+}
+
+}
+
+function showAura(){
+
+let mood=document.getElementById("mood").value
+
+const data=moodData[mood]
+
+if(!data) return
+
+document.getElementById("aura").style.background=data.color
+document.getElementById("glow").style.background=data.color
+
+document.getElementById("quote").innerText=data.quote
+
+document.getElementById("edgeGlow")
+.classList.add("edge-active")
+
+startAudio(data.freq)
+
+updateNebula(data.color)
+
+}
+
+function saveMood(){
+
+stopAudio()
+
+document.getElementById("edgeGlow")
+.classList.remove("edge-active")
+
+}
+
+/* toggles */
+
+document.getElementById("soundToggle")
+.addEventListener("change",(e)=>{
+
 soundEnabled=e.target.checked
+
+if(!soundEnabled){
+stopAudio()
+}
+
 })
 
-document.getElementById("themeToggle").addEventListener("change",()=>{
+document.getElementById("themeToggle")
+.addEventListener("change",()=>{
+
 document.body.classList.toggle("light")
+
 })
+
+/* nebula */
 
 const nebula=document.getElementById("nebula")
 const ctx=nebula.getContext("2d")
@@ -144,5 +141,3 @@ ctx.fillStyle=gradient
 ctx.fillRect(0,0,nebula.width,nebula.height)
 
 }
-
-})

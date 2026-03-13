@@ -1,83 +1,15 @@
 body{
 margin:0;
-font-family:sans-serif;
+font-family:Segoe UI;
 background:#050b22;
 color:white;
 overflow:hidden;
+transition:0.4s;
 }
 
 body.light{
 background:#eef3ff;
 color:#111;
-}
-
-.container{
-width:340px;
-margin:auto;
-margin-top:90px;
-text-align:center;
-}
-
-select,textarea{
-width:100%;
-padding:10px;
-border-radius:8px;
-border:none;
-margin-top:10px;
-}
-
-button{
-margin-top:10px;
-padding:10px 16px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-}
-
-.aura-wrap{
-width:200px;
-height:200px;
-margin:30px auto;
-position:relative;
-}
-
-.aura{
-width:200px;
-height:200px;
-border-radius:50%;
-}
-
-.aura-glow{
-position:absolute;
-width:260px;
-height:260px;
-top:-30px;
-left:-30px;
-border-radius:50%;
-filter:blur(60px);
-opacity:0.7;
-animation:pulse 4s infinite;
-}
-
-@keyframes pulse{
-0%{transform:scale(1)}
-50%{transform:scale(1.2)}
-100%{transform:scale(1)}
-}
-
-/* edge glow */
-
-#edgeGlow{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
-}
-
-.edge-active{
-box-shadow:0 0 40px #66e0ff inset;
 }
 
 /* header */
@@ -90,7 +22,7 @@ font-size:18px;
 color:#9fdcff;
 }
 
-/* toggles */
+/* controls */
 
 .controls{
 position:fixed;
@@ -135,4 +67,87 @@ background:linear-gradient(90deg,#66e0ff,#7b5cff);
 
 input:checked + .slider:before{
 transform:translateX(22px);
+}
+
+/* container */
+
+.container{
+width:360px;
+margin:auto;
+margin-top:90px;
+text-align:center;
+}
+
+select,textarea{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+border:none;
+}
+
+/* buttons */
+
+button{
+padding:10px 16px;
+border:none;
+border-radius:8px;
+margin:10px;
+cursor:pointer;
+}
+
+/* aura */
+
+.aura-wrap{
+width:200px;
+height:200px;
+margin:40px auto;
+position:relative;
+}
+
+.aura{
+width:200px;
+height:200px;
+border-radius:50%;
+}
+
+.aura-glow{
+position:absolute;
+width:260px;
+height:260px;
+top:-30px;
+left:-30px;
+border-radius:50%;
+filter:blur(60px);
+opacity:0.7;
+animation:pulse 4s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.2)}
+100%{transform:scale(1)}
+}
+
+/* edge lighting */
+
+#edgeGlow{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+}
+
+.edge-active{
+animation:edgeLight 3s infinite linear;
+}
+
+@keyframes edgeLight{
+
+0%{box-shadow:0 0 25px #66e0ff inset;}
+50%{box-shadow:0 0 50px #7b5cff inset;}
+100%{box-shadow:0 0 25px #66e0ff inset;}
+
 }
