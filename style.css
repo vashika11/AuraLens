@@ -19,29 +19,10 @@ background:var(--bg);
 color:var(--text);
 height:100vh;
 overflow:hidden;
-transition:background 0.4s,color 0.4s;
-}
-
-/* edge glow */
-
-#edgeGlow{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
-border:4px solid transparent;
-box-shadow:0 0 30px transparent,inset 0 0 30px transparent;
 transition:0.4s;
-z-index:1;
 }
 
-.edge-active{
-box-shadow:0 0 40px var(--accent),inset 0 0 40px var(--accent);
-}
-
-/* background */
+/* backgrounds */
 
 #stars,#nebula{
 position:fixed;
@@ -54,6 +35,23 @@ z-index:0;
 
 #nebula{
 opacity:0.35;
+}
+
+/* edge glow */
+
+#edgeGlow{
+position:fixed;
+width:100%;
+height:100%;
+pointer-events:none;
+border:4px solid transparent;
+box-shadow:0 0 30px transparent,inset 0 0 30px transparent;
+transition:0.4s;
+z-index:1;
+}
+
+.edge-active{
+box-shadow:0 0 40px var(--accent),inset 0 0 40px var(--accent);
 }
 
 /* header */
@@ -78,17 +76,10 @@ gap:20px;
 z-index:2;
 }
 
-.toggle{
-display:flex;
-align-items:center;
-gap:8px;
-}
-
 .switch{
 position:relative;
 width:46px;
 height:24px;
-display:inline-block;
 }
 
 .switch input{
@@ -97,25 +88,21 @@ opacity:0;
 
 .slider{
 position:absolute;
-top:0;
-left:0;
-right:0;
-bottom:0;
 background:#2a315c;
 border-radius:30px;
-transition:0.4s;
+top:0;left:0;right:0;bottom:0;
 }
 
 .slider:before{
 content:"";
 position:absolute;
-height:18px;
 width:18px;
+height:18px;
 left:3px;
 bottom:3px;
 background:white;
 border-radius:50%;
-transition:0.4s;
+transition:0.3s;
 }
 
 input:checked + .slider{
@@ -138,7 +125,6 @@ background:var(--card);
 border-radius:18px;
 padding:30px;
 text-align:center;
-box-shadow:0 20px 60px rgba(0,0,0,0.6);
 z-index:2;
 }
 
@@ -159,7 +145,6 @@ margin-bottom:14px;
 .buttons{
 display:flex;
 gap:10px;
-margin-bottom:18px;
 }
 
 .primary{
@@ -185,10 +170,10 @@ cursor:pointer;
 /* aura */
 
 .aura-wrap{
-position:relative;
 width:200px;
 height:200px;
 margin:20px auto;
+position:relative;
 }
 
 .aura{
@@ -215,25 +200,14 @@ animation:auraPulse 4s infinite;
 100%{transform:scale(1)}
 }
 
-/* quote */
-
 .quote{
 margin-top:10px;
-font-style:italic;
 opacity:0;
-transition:0.5s;
+transition:0.4s;
 }
 
 .quote.show{
 opacity:1;
-}
-
-.badge{
-margin-top:10px;
-padding:6px 12px;
-border-radius:20px;
-background:rgba(255,255,255,0.12);
-display:inline-block;
 }
 
 .footer{

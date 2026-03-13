@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
 
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>AuraLens</title>
 
 <link rel="stylesheet" href="style.css">
@@ -25,7 +24,7 @@
 <div class="toggle">
 <span>Dark</span>
 <label class="switch">
-<input type="checkbox" id="themeToggle" checked>
+<input type="checkbox" id="themeToggle">
 <span class="slider"></span>
 </label>
 </div>
@@ -46,7 +45,9 @@
 <p class="subtitle">Visualize your emotional energy</p>
 
 <select id="mood">
+
 <option disabled selected>Select your mood</option>
+
 <option>Happy</option>
 <option>Calm</option>
 <option>Sad</option>
@@ -62,6 +63,7 @@
 <option>Curious</option>
 <option>Playful</option>
 <option>Relaxed</option>
+
 </select>
 
 <textarea id="note"
@@ -78,7 +80,6 @@ placeholder="Optional: describe more about your mood or your day..."></textarea>
 <div class="aura-wrap">
 
 <div class="aura-glow" id="glow"></div>
-
 <div class="aura" id="aura"></div>
 
 </div>
@@ -93,8 +94,8 @@ Created by Vashika Tyagi — AuraLens
 
 </div>
 
-<script src="script.js"></script>
-<script src="particles.js"></script>
+<script src="particles.js" defer></script>
+<script src="script.js" defer></script>
 
 </body>
 </html>
