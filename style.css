@@ -19,7 +19,7 @@ height:100vh;
 overflow:hidden;
 }
 
-/* background canvases */
+/* background */
 
 #stars,#nebula{
 position:fixed;
@@ -176,8 +176,6 @@ height:200px;
 border-radius:50%;
 }
 
-/* glow */
-
 .aura-glow{
 position:absolute;
 width:260px;
@@ -196,25 +194,7 @@ animation:auraPulse 4s infinite;
 100%{transform:scale(1)}
 }
 
-/* halo ring */
-
-.halo-ring{
-position:absolute;
-width:260px;
-height:260px;
-top:-30px;
-left:-30px;
-border-radius:50%;
-border:2px solid rgba(255,255,255,0.3);
-animation:haloSpin 20s linear infinite;
-}
-
-@keyframes haloSpin{
-from{transform:rotate(0deg)}
-to{transform:rotate(360deg)}
-}
-
-/* orbit rings */
+/* orbit */
 
 .orbit{
 position:absolute;
@@ -261,8 +241,6 @@ border-radius:20px;
 background:rgba(255,255,255,0.12);
 display:inline-block;
 }
-
-/* footer */
 
 .footer{
 margin-top:18px;

@@ -18,14 +18,36 @@ Relaxed:{color:"#56ab2f",particle:"🍃",quote:"Stillness restores your soul."}
 
 }
 
+function detectMood(text){
+
+text=text.toLowerCase()
+
+if(text.includes("happy")||text.includes("joy")) return "Happy"
+if(text.includes("calm")||text.includes("peace")) return "Calm"
+if(text.includes("sad")) return "Sad"
+if(text.includes("stress")||text.includes("anxious")) return "Anxious"
+if(text.includes("excited")) return "Excited"
+
+return null
+
+}
+
 function showAura(){
 
-const mood=document.getElementById("mood").value
+let mood=document.getElementById("mood").value
+const note=document.getElementById("note").value
+
+const detected=detectMood(note)
+
+if(detected){
+mood=detected
+document.getElementById("mood").value=mood
+}
+
 const data=moodData[mood]
 
 document.getElementById("aura").style.background=data.color
 document.getElementById("glow").style.background=data.color
-document.querySelector(".halo-ring").style.borderColor=data.color
 
 createParticles(data)
 
@@ -33,54 +55,38 @@ const q=document.getElementById("quote")
 q.innerText=data.quote
 q.classList.add("show")
 
+playSound(mood)
 updateNebula(data.color)
 
 }
 
-function saveMood(){
+/* audio */
 
-const mood=document.getElementById("mood").value
-const note=document.getElementById("note").value
-const time=new Date().toLocaleString()
+let audioCtx
+let soundEnabled=true
 
-document.getElementById("badge").innerText=mood+" • "+time
-
-localStorage.setItem("AuraMood",JSON.stringify({mood,note,time}))
-
-}
-
-/* theme toggle */
-
-document.getElementById("themeToggle")
-.addEventListener("change",()=>{
-document.body.classList.toggle("light")
+document.getElementById("soundToggle")
+.addEventListener("change",(e)=>{
+soundEnabled=e.target.checked
 })
 
-/* nebula */
+function playSound(mood){
 
-const nebula=document.getElementById("nebula")
-const n=nebula.getContext("2d")
+if(!soundEnabled) return
 
-nebula.width=window.innerWidth
-nebula.height=window.innerHeight
+if(!audioCtx)
+audioCtx=new(window.AudioContext||window.webkitAudioContext)()
 
-function updateNebula(color){
+const osc=audioCtx.createOscillator()
+const gain=audioCtx.createGain()
 
-const gradient=n.createRadialGradient(
-window.innerWidth/2,
-window.innerHeight/2,
-100,
-window.innerWidth/2,
-window.innerHeight/2,
-600
-)
+osc.frequency.value=220+Math.random()*200
+gain.gain.value=0.04
 
-gradient.addColorStop(0,color)
-gradient.addColorStop(1,"transparent")
+osc.connect(gain)
+gain.connect(audioCtx.destination)
 
-n.clearRect(0,0,nebula.width,nebula.height)
-
-n.fillStyle=gradient
-n.fillRect(0,0,nebula.width,nebula.height)
+osc.start()
+osc.stop(audioCtx.currentTime+2)
 
 }

@@ -19,7 +19,6 @@ p.className="particle"
 p.innerText=particle
 
 p.style.animationDuration=(speed+Math.random()*3)+"s"
-
 p.style.transform="rotate("+(i*(360/count))+"deg)"
 
 orbit.appendChild(p)
