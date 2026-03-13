@@ -1,275 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>AuraLens</title>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="style.css">
 
-<style>
-
-body{
-margin:0;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-font-family:Segoe UI;
-color:white;
-overflow:hidden;
-
-background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#1e3c72,#000428);
-background-size:600% 600%;
-animation:gradient 20s ease infinite;
-}
-
-@keyframes gradient{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
-}
-
-.container{
-text-align:center;
-padding:40px;
-border-radius:25px;
-background:rgba(255,255,255,0.07);
-backdrop-filter:blur(25px);
-box-shadow:0 0 60px rgba(0,0,0,0.6);
-width:350px;
-}
-
-.aura{
-width:220px;
-height:220px;
-margin:25px auto;
-border-radius:50%;
-filter:blur(30px);
-animation:pulse 6s infinite;
-}
-
-@keyframes pulse{
-0%{transform:scale(1)}
-50%{transform:scale(1.25)}
-100%{transform:scale(1)}
-}
-
-select,input,button{
-padding:10px 15px;
-border:none;
-border-radius:10px;
-margin:5px;
-font-size:14px;
-background:#ffffff15;
-color:white;
-}
-
-.star{
-position:absolute;
-font-size:20px;
-animation:float linear infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(110vh);opacity:0}
-40%{opacity:1}
-100%{transform:translateY(-10vh);opacity:0}
-}
-
-canvas{
-margin-top:20px;
-}
-
-</style>
 </head>
 
 <body>
 
-<div class="container">
+<canvas id="stars"></canvas>
 
-<h2>✨ AuraLens</h2>
+<div class="header">AuraLens</div>
 
-<input id="textMood" placeholder="Describe your mood">
+<div class="controls">
 
-<br>
+<div class="toggle">
+<span>Dark</span>
+<label class="switch">
+<input type="checkbox" id="themeToggle" checked>
+<span class="slider"></span>
+</label>
+</div>
 
-<select id="mood">
-
-<option value="happy">Happy</option>
-<option value="calm">Calm</option>
-<option value="sad">Sad</option>
-<option value="anxious">Anxious</option>
-<option value="excited">Excited</option>
-<option value="tired">Tired</option>
-<option value="motivated">Motivated</option>
-<option value="dreamy">Dreamy</option>
-<option value="lonely">Lonely</option>
-<option value="angry">Angry</option>
-<option value="loving">Loving</option>
-<option value="confident">Confident</option>
-<option value="curious">Curious</option>
-<option value="playful">Playful</option>
-<option value="relaxed">Relaxed</option>
-
-</select>
-
-<br>
-
-<button onclick="detectMood()">Detect</button>
-<button onclick="activateMood()">Visualize</button>
-
-<div class="aura" id="aura"></div>
-
-<canvas id="chart" width="300" height="200"></canvas>
+<div class="toggle">
+<span>Sound</span>
+<label class="switch">
+<input type="checkbox" id="soundToggle" checked>
+<span class="slider"></span>
+</label>
+</div>
 
 </div>
 
-<script>
+<div class="container">
 
-const moods={
+<h1>AuraLens</h1>
+<p class="subtitle">Visualize your emotional energy</p>
 
-happy:{color:"#ffd200",freq:600,emoji:["✨","🌟"]},
-calm:{color:"#2c5364",freq:220,emoji:["🌙","⭐"]},
-sad:{color:"#4facfe",freq:140,emoji:["💧"]},
-anxious:{color:"#8e2de2",freq:320,emoji:["⚡"]},
-excited:{color:"#ff512f",freq:720,emoji:["🔥"]},
-tired:{color:"#485563",freq:120,emoji:["🌙"]},
-motivated:{color:"#38ef7d",freq:500,emoji:["🚀"]},
-dreamy:{color:"#764ba2",freq:260,emoji:["💫"]},
-lonely:{color:"#414345",freq:160,emoji:["🌧"]},
-angry:{color:"#ef473a",freq:700,emoji:["🔥"]},
-loving:{color:"#ff0844",freq:440,emoji:["❤️"]},
-confident:{color:"#ffd200",freq:650,emoji:["⭐"]},
-curious:{color:"#396afc",freq:480,emoji:["🔍"]},
-playful:{color:"#ff9a9e",freq:540,emoji:["🎉"]},
-relaxed:{color:"#56ab2f",freq:180,emoji:["🍃"]}
+<h3 class="select-title">Select your mood</h3>
 
-};
+<select id="mood">
 
-function detectMood(){
+<option>Happy</option>
+<option>Calm</option>
+<option>Sad</option>
+<option>Anxious</option>
+<option>Excited</option>
+<option>Tired</option>
+<option>Motivated</option>
+<option>Dreamy</option>
+<option>Lonely</option>
+<option>Angry</option>
+<option>Loving</option>
+<option>Confident</option>
+<option>Curious</option>
+<option>Playful</option>
+<option>Relaxed</option>
 
-let text=document.getElementById("textMood").value.toLowerCase()
+</select>
 
-for(let mood in moods){
+<textarea id="note" placeholder="Optional: describe more about your mood or your day..."></textarea>
 
-if(text.includes(mood)){
-document.getElementById("mood").value=mood
-return
-}
+<div class="buttons">
 
-}
+<button class="primary" onclick="showAura()">Show Aura</button>
 
-}
+<button class="secondary" onclick="saveMood()">Save</button>
 
-function activateMood(){
+</div>
 
-let mood=document.getElementById("mood").value
+<div class="aura-wrap">
 
-updateAura(mood)
+<div class="aura-glow" id="glow"></div>
 
-spawnStars(mood)
+<div class="aura" id="aura"></div>
 
-playAmbient(mood)
+<div class="orbit" id="orbit"></div>
 
-saveMood(mood)
+</div>
 
-updateChart()
+<div id="quote" class="quote"></div>
 
-}
+<div id="badge" class="badge">No mood yet</div>
 
-function updateAura(mood){
+</div>
 
-let aura=document.getElementById("aura")
-
-aura.style.background=
-`radial-gradient(circle,${moods[mood].color},transparent)`
-
-}
-
-function spawnStars(mood){
-
-let emoji=moods[mood].emoji
-
-for(let i=0;i<15;i++){
-
-let s=document.createElement("div")
-
-s.className="star"
-
-s.innerText=emoji[Math.floor(Math.random()*emoji.length)]
-
-s.style.left=Math.random()*100+"vw"
-
-s.style.animationDuration=5+Math.random()*5+"s"
-
-document.body.appendChild(s)
-
-}
-
-}
-
-let audioCtx
-
-function playAmbient(mood){
-
-if(!audioCtx)
-audioCtx=new (window.AudioContext||window.webkitAudioContext)()
-
-let osc=audioCtx.createOscillator()
-let gain=audioCtx.createGain()
-
-osc.frequency.value=moods[mood].freq
-gain.gain.value=0.05
-
-osc.connect(gain)
-gain.connect(audioCtx.destination)
-
-osc.start()
-osc.stop(audioCtx.currentTime+2)
-
-}
-
-function saveMood(mood){
-
-let history=JSON.parse(localStorage.getItem("moods"))||[]
-
-history.push(mood)
-
-localStorage.setItem("moods",JSON.stringify(history))
-
-}
-
-function updateChart(){
-
-let history=JSON.parse(localStorage.getItem("moods"))||[]
-
-let counts={}
-
-history.forEach(m=>{
-counts[m]=(counts[m]||0)+1
-})
-
-let labels=Object.keys(counts)
-let data=Object.values(counts)
-
-let ctx=document.getElementById("chart")
-
-new Chart(ctx,{
-type:'bar',
-data:{
-labels:labels,
-datasets:[{
-label:"Mood Frequency",
-data:data
-}]
-}
-})
-
-}
-
-updateChart()
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
