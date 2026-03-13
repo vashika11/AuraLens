@@ -1,91 +1,323 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AuraLens — Mood Aura Visualizer</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<title>AuraLens</title>
+
+<style>
+
+/* ===== BODY ===== */
+
+body{
+
+margin:0;
+height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-family:Segoe UI;
+
+overflow:hidden;
+color:white;
+
+/* liquid gradient */
+
+background:linear-gradient(
+270deg,
+#0f2027,
+#203a43,
+#2c5364,
+#1e3c72,
+#000428
+);
+
+background-size:800% 800%;
+
+animation:gradientMove 25s infinite;
+
+}
+
+@keyframes gradientMove{
+
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+
+}
+
+/* ===== GLASS CARD ===== */
+
+.container{
+
+text-align:center;
+
+padding:45px;
+
+border-radius:25px;
+
+background:rgba(255,255,255,0.06);
+
+backdrop-filter:blur(25px);
+
+box-shadow:
+
+0 0 60px rgba(0,0,0,0.6),
+
+0 0 40px rgba(255,255,255,0.08);
+
+}
+
+/* ===== TITLE ===== */
+
+h1{
+
+letter-spacing:2px;
+
+text-shadow:
+
+0 0 20px rgba(255,255,255,0.6);
+
+}
+
+/* ===== AURA ===== */
+
+.aura{
+
+width:240px;
+height:240px;
+
+margin:35px auto;
+
+border-radius:50%;
+
+filter:blur(35px);
+
+animation:pulse 6s infinite;
+
+}
+
+/* aura pulse */
+
+@keyframes pulse{
+
+0%{transform:scale(1)}
+50%{transform:scale(1.25)}
+100%{transform:scale(1)}
+
+}
+
+/* ===== SELECT ===== */
+
+select,button{
+
+padding:12px 18px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:15px;
+
+background:#ffffff15;
+
+color:white;
+
+margin-top:10px;
+
+}
+
+/* ===== PARTICLES ===== */
+
+.star{
+
+position:absolute;
+
+color:white;
+
+font-size:20px;
+
+animation:starFloat linear infinite;
+
+}
+
+@keyframes starFloat{
+
+0%{
+
+transform:translateY(110vh);
+
+opacity:0;
+
+}
+
+40%{opacity:1}
+
+100%{
+
+transform:translateY(-10vh);
+
+opacity:0;
+
+}
+
+}
+
+</style>
 </head>
+
 <body>
 
-  <!-- Toggle Controls -->
-  <div class="topbar">
-    <div class="brand">AuraLens</div>
+<div class="container">
 
-    <div class="toggles">
-      <label class="switch">
-        <input id="darkToggle" type="checkbox" />
-        <span class="slider"></span>
-      </label>
-      <span class="toggle-label">Dark</span>
+<h1>✨ AuraLens</h1>
 
-      <label class="switch audio-switch" title="Toggle ambient tone">
-        <input id="audioToggle" type="checkbox" />
-        <span class="slider"></span>
-      </label>
-      <span class="toggle-label">Sound</span>
-    </div>
-  </div>
+<select id="mood">
 
-  <!-- Particle canvas behind everything -->
-  <canvas id="particles"></canvas>
+<option value="happy">Happy</option>
+<option value="calm">Calm</option>
+<option value="sad">Sad</option>
+<option value="anxious">Anxious</option>
+<option value="excited">Excited</option>
+<option value="tired">Tired</option>
+<option value="motivated">Motivated</option>
+<option value="dreamy">Dreamy</option>
+<option value="lonely">Lonely</option>
+<option value="angry">Angry</option>
+<option value="loving">Loving</option>
+<option value="confident">Confident</option>
+<option value="curious">Curious</option>
+<option value="playful">Playful</option>
+<option value="relaxed">Relaxed</option>
 
-  <!-- Main centered card -->
-  <main class="card" id="card">
-    <header class="card-head">
-      <h1 class="title">AuraLens</h1>
-      <p class="subtitle">Visualize your emotional energy</p>
-    </header>
+</select>
 
-    <section class="controls">
-      <select id="moodSelect" class="mood-select" aria-label="Select mood">
-        <option value="">Select your mood</option>
+<br>
 
-        <!-- 20+ moods -->
-        <option value="happy">Happy</option>
-        <option value="calm">Calm</option>
-        <option value="sad">Sad</option>
-        <option value="anxious">Anxious</option>
-        <option value="excited">Excited</option>
-        <option value="tired">Tired</option>
-        <option value="grateful">Grateful</option>
-        <option value="motivated">Motivated</option>
-        <option value="nostalgic">Nostalgic</option>
-        <option value="peaceful">Peaceful</option>
-        <option value="lonely">Lonely</option>
-        <option value="dreamy">Dreamy</option>
-        <option value="bored">Bored</option>
-        <option value="optimistic">Optimistic</option>
-        <option value="angry">Angry</option>
-        <option value="loving">Loving</option>
-        <option value="confident">Confident</option>
-        <option value="curious">Curious</option>
-        <option value="playful">Playful</option>
-        <option value="relaxed">Relaxed</option>
-      </select>
+<button onclick="activateMood()">Reveal Aura</button>
 
-      <div class="buttons">
-        <button id="showAuraBtn" class="btn primary">Show Aura</button>
-        <button id="saveMoodBtn" class="btn ghost" title="Save today's mood locally">Save</button>
-      </div>
-    </section>
+<div class="aura" id="aura"></div>
 
-    <section class="visual">
-      <div class="aura-wrap">
-        <div class="aura-circle" id="auraCircle" aria-hidden="true"></div>
-        <div class="glow-ring" id="glowRing" aria-hidden="true"></div>
-      </div>
+</div>
 
-      <p class="quote" id="quoteText" aria-live="polite"></p>
-      <div class="history" id="history"></div>
-    </section>
+<script>
 
-    <footer class="credit">
-      <small>Created by Vashika Tyagi — AuraLens</small>
-    </footer>
-  </main>
+/* ===== MOOD SYSTEM ===== */
 
-<script src="particles.js"></script>
-<script src="script.js"></script>
+const moods={
+
+happy:{color:"#ffd200",emoji:["✨","🌟"],freq:600},
+
+calm:{color:"#2c5364",emoji:["🌙","⭐"],freq:220},
+
+sad:{color:"#4facfe",emoji:["💧"],freq:140},
+
+anxious:{color:"#8e2de2",emoji:["⚡"],freq:320},
+
+excited:{color:"#ff512f",emoji:["🔥"],freq:720},
+
+tired:{color:"#485563",emoji:["🌙"],freq:120},
+
+motivated:{color:"#38ef7d",emoji:["🚀"],freq:500},
+
+dreamy:{color:"#764ba2",emoji:["💫"],freq:260},
+
+lonely:{color:"#414345",emoji:["🌧"],freq:160},
+
+angry:{color:"#ef473a",emoji:["🔥"],freq:700},
+
+loving:{color:"#ff0844",emoji:["❤️"],freq:440},
+
+confident:{color:"#ffd200",emoji:["⭐"],freq:650},
+
+curious:{color:"#396afc",emoji:["🔍"],freq:480},
+
+playful:{color:"#ff9a9e",emoji:["🎉"],freq:540},
+
+relaxed:{color:"#56ab2f",emoji:["🍃"],freq:180}
+
+}
+
+/* ===== ACTIVATE ===== */
+
+function activateMood(){
+
+let mood=document.getElementById("mood").value
+
+updateAura(mood)
+
+spawnStars(mood)
+
+playAmbient(mood)
+
+}
+
+/* ===== AURA ===== */
+
+function updateAura(mood){
+
+let aura=document.getElementById("aura")
+
+aura.style.background=
+`radial-gradient(circle,${moods[mood].color},transparent)`
+
+}
+
+/* ===== GALAXY PARTICLES ===== */
+
+function spawnStars(mood){
+
+let emoji=moods[mood].emoji
+
+for(let i=0;i<18;i++){
+
+let s=document.createElement("div")
+
+s.className="star"
+
+s.innerText=emoji[Math.floor(Math.random()*emoji.length)]
+
+s.style.left=Math.random()*100+"vw"
+
+s.style.animationDuration=5+Math.random()*6+"s"
+
+document.body.appendChild(s)
+
+}
+
+}
+
+/* ===== GENERATED AMBIENT SOUND ===== */
+
+let audioCtx
+
+function playAmbient(mood){
+
+if(!audioCtx)
+audioCtx=new (window.AudioContext||window.webkitAudioContext)()
+
+let osc=audioCtx.createOscillator()
+
+let gain=audioCtx.createGain()
+
+osc.type="sine"
+
+osc.frequency.value=moods[mood].freq
+
+gain.gain.value=0.05
+
+osc.connect(gain)
+
+gain.connect(audioCtx.destination)
+
+osc.start()
+
+osc.stop(audioCtx.currentTime+2)
+
+}
+
+</script>
+
 </body>
 </html>
